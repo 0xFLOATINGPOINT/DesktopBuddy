@@ -6,3 +6,5 @@ obj/
 *.cache
 *.log
 packages/
+*.ts
+DesktopBuddy.zip

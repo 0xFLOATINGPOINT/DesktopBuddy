@@ -1,9 +1,0 @@
-{
-  "name": "desktop-buddy",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "build": "taskkill /F /IM Resonite.exe 2>nul & taskkill /F /IM Renderite.Host.exe 2>nul & taskkill /F /IM cloudflared.exe 2>nul & dotnet build DesktopBuddy/DesktopBuddy.csproj && start steam://rungameid/2519830",
-    "package": "node scripts/package.js"
-  }
-}

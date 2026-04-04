@@ -197,7 +197,6 @@ public sealed class WgcCapture : IDisposable
     private GCHandle _pinnedBuffer;
     private readonly object _frameLock = new();
     private volatile bool _frameReady;
-    private Thread _keepaliveThread;
     private volatile bool _closed;
     private int _lastWidth, _lastHeight;
     private int _framesCaptured;
@@ -508,25 +507,6 @@ public sealed class WgcCapture : IDisposable
         DeviceCreateTexture2D(_d3dDevice, ref desc, IntPtr.Zero, out _encodeTexture);
         _encodeTexW = w; _encodeTexH = h;
 
-        // Keepalive disabled — FFmpeg encoder handles idle frames via pause detection
-        // if (_keepaliveThread == null)
-        // {
-        //     _keepaliveThread = new Thread(() =>
-        //     {
-        //         while (!_disposed)
-        //         {
-        //             Thread.Sleep(50);
-        //             if (_disposed || OnGpuFrame == null || _encodeTexture == IntPtr.Zero) continue;
-        //             long msSinceFrame = (DateTime.UtcNow.Ticks - Interlocked.Read(ref _lastFrameTicks)) / TimeSpan.TicksPerMillisecond;
-        //             if (msSinceFrame > 100)
-        //             {
-        //                 try { OnGpuFrame.Invoke(_d3dDevice, _encodeTexture, _encodeTexW, _encodeTexH); }
-        //                 catch (Exception kaEx) { ResoniteModLoader.ResoniteMod.Msg($"[WgcCapture] Keepalive error: {kaEx.Message}"); }
-        //             }
-        //         }
-        //     }) { IsBackground = true, Name = "WGC_Keepalive" };
-        //     _keepaliveThread.Start();
-        // }
     }
 
     private long _lastFrameTicks;

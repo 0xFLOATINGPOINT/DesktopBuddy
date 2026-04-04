@@ -10,6 +10,7 @@
 
   <PropertyGroup>
     <ResonitePath>C:\Program Files (x86)\Steam\steamapps\common\Resonite</ResonitePath>
+    <LibPath>$(MSBuildThisFileDirectory)..\lib</LibPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,41 +19,42 @@
     <PackageReference Include="FFmpeg.AutoGen" Version="7.1.1" />
   </ItemGroup>
 
+  <!-- Reference DLLs from lib/ (repo-local, works in CI) -->
   <ItemGroup>
     <Reference Include="FrooxEngine">
-      <HintPath>$(ResonitePath)\FrooxEngine.dll</HintPath>
+      <HintPath>$(LibPath)\FrooxEngine.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Elements.Core">
-      <HintPath>$(ResonitePath)\Elements.Core.dll</HintPath>
+      <HintPath>$(LibPath)\Elements.Core.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Elements.Assets">
-      <HintPath>$(ResonitePath)\Elements.Assets.dll</HintPath>
+      <HintPath>$(LibPath)\Elements.Assets.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="ResoniteModLoader">
-      <HintPath>$(ResonitePath)\Libraries\ResoniteModLoader.dll</HintPath>
+      <HintPath>$(LibPath)\ResoniteModLoader.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="SkyFrost.Base">
-      <HintPath>$(ResonitePath)\SkyFrost.Base.dll</HintPath>
+      <HintPath>$(LibPath)\SkyFrost.Base.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="SkyFrost.Base.Models">
-      <HintPath>$(ResonitePath)\SkyFrost.Base.Models.dll</HintPath>
+      <HintPath>$(LibPath)\SkyFrost.Base.Models.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Renderite.Shared">
-      <HintPath>$(ResonitePath)\Renderite.Shared.dll</HintPath>
+      <HintPath>$(LibPath)\Renderite.Shared.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Awwdio">
-      <HintPath>$(ResonitePath)\Awwdio.dll</HintPath>
+      <HintPath>$(LibPath)\Awwdio.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="FrooxEngine.Store">
-      <HintPath>$(ResonitePath)\FrooxEngine.Store.dll</HintPath>
+      <HintPath>$(LibPath)\FrooxEngine.Store.dll</HintPath>
       <Private>false</Private>
     </Reference>
   </ItemGroup>
@@ -74,6 +76,7 @@
   <Target Name="CopyToResonite" AfterTargets="ILRepackMerge">
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ResonitePath)\rml_mods" ContinueOnError="true" />
     <Copy SourceFiles="$(MSBuildThisFileDirectory)..\ffmpeg\avcodec-61.dll;$(MSBuildThisFileDirectory)..\ffmpeg\avformat-61.dll;$(MSBuildThisFileDirectory)..\ffmpeg\avutil-59.dll;$(MSBuildThisFileDirectory)..\ffmpeg\swresample-5.dll;$(MSBuildThisFileDirectory)..\ffmpeg\swscale-8.dll" DestinationFolder="$(ResonitePath)\ffmpeg" ContinueOnError="true" />
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)..\cloudflared\cloudflared.exe" DestinationFolder="$(ResonitePath)\cloudflared" ContinueOnError="true" />
   </Target>
 
 </Project>
